@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Contacto | NET-CE | Solicita tu Cotización</title>
+    <meta name="description" content="Contáctanos para una asesoría en redes, soporte TI o infraestructura. Hablemos de tu proyecto. Respodemos en 24 horas.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container header-container">
+        
+        <a href="index.html" class="logo">
+            <img src="assets/images/Logo-NETCE-png.png" alt="Logo NET-CE Soluciones">
+        </a>
+
+        <nav class="main-nav">
+            <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav-list">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <ul class="nav-list" id="main-nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                <!--<li class="nav-item"><a href="proyectos.html" class="nav-link">Proyectos</a></li>-->
+                <li class="nav-item"><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                <li class="nav-item">
+                    <a href="contacto.html" class="nav-link btn-nav">Contáctanos</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+    <main>
+        <section class="contact-section">
+            <div class="container">
+                
+                <div class="section-title">
+                    <h2>Contáctanos</h2>
+                    <p>¿Tienes un proyecto en mente o necesitas soporte? Hablemos.</p>
+                </div>
+
+                <div class="contact-container">
+
+                    <form class="contact-form" id="contact-form" action="https://formspree.io/f/myzllvrb" method="POST">
+                        
+                        <div class="form-group">
+                            <label for="name">Nombre Completo</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Teléfono (Opcional)</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full-width">Enviar Mensaje</button>
+                        <div id="form-status-message"></div>
+                    </form>
+
+                    <div class="contact-info">
+                        <h3>Información Directa</h3>
+                        <p>Si prefieres, puedes contactarnos directamente por estos medios.</p>
+                        
+                        <ul class="info-list">
+                            <li>
+                                <strong>Email:</strong><br>
+                                <a href="mailto:net-ce@net-ce.cl" class="js-copy-email">net-ce@net-ce.cl</a></li>
+                            </li>
+                            <li>
+                                <strong>Teléfono:</strong><br>
+                                <a href="tel:+56 9 5792 8042">+56 9 5792 8042</a>
+                            </li>
+                            <li>
+                                <strong>Horario:</strong><br>
+                                Lunes a Viernes<br>
+                                9:00 AM - 6:00 PM
+                            </li>
+                        </ul>
+                    </div>
+
+                </div> 
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-container">
+
+            <div class="footer-col">
+                <h3 class="footer-logo">NET-CE</h3>
+                <p>Soluciones Tecnológicas Integrales.</p>
+                <p>&copy; 2025 NET-CE. Todos los derechos reservados.</p>
+                <div class="footer-social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61578633135960 " target="_blank" aria-label="Síguenos en Facebook">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Logo Facebook">
+                    </a>
+                    <a href="https://www.instagram.com/_net_ce_" target="_blank" aria-label="Síguenos en Instagram">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Logo Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul class="footer-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto Directo</h4>
+                <ul class="footer-list">
+                    <li>Email: <a href="mailto:net-ce@net-ce.cl" class="js-copy-email">net-ce@net-ce.cl</a></li>
+                    <li>Teléfono: <a href="tel:+56 9 5792 8042">+56 9 5792 8042</a></li>
+                    <li>Ubicación: Santiago, Chile</li>
+                </ul>
+            </div>
+
+        </div> 
+    </footer>
+    <a href="https://wa.me/56957928042" target="_blank" style="position:fixed; bottom:20px; right:20px; background:#25d366; padding:12px 14px; border-radius:50%; text-decoration:none; color:white; box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height:28px; width:28px;"/>
+    </a>
+    <a href="#" class="back-to-top" aria-label="Volver arriba">
+    <span>&uarr;</span> </a>
+</body>
+</html>

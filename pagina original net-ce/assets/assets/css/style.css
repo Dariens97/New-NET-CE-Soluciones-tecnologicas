@@ -1,0 +1,1652 @@
+/* ------------------------- */
+/* 1. CONFIGURACIÓN GLOBAL   */
+/* ------------------------- */
+
+/*
+  :root es donde guardamos nuestras "variables" de CSS.
+  Si el cliente quiere cambiar el azul, solo lo cambias aquí
+  una vez y se actualiza en toda la web.
+*/
+:root {
+  --color-primario: #1136b3;  /* El azul de NET-CE */
+  --color-secundario: #2b2b2b; /* Un gris/negro oscuro */
+  --color-texto: #333;
+  --color-fondo: #ffffff;
+  --color-fondo-claro: #f4f4f4; /* Para secciones alternas */
+}
+
+/*
+  El "CSS Reset" moderno.
+  'box-sizing: border-box' es FUNDAMENTAL para responsive.
+  Nos permite definir anchos (width) que incluyan el padding
+  y el borde, haciendo los cálculos de layout mil veces más fáciles.
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%; /* 16px por defecto */
+  scroll-behavior: smooth; /* Para clics en anclas (ej: ir a #contacto) */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+               Helvetica, Arial, sans-serif;
+  line-height: 1.6; /* Espaciado de línea para mejor lectura */
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", "Helvetica", sans-serif; /* (Asumiendo que queremos una fuente más moderna para títulos) */
+  color: var(--color-secundario);
+  margin-bottom: 0.75rem;
+}
+
+a {
+  text-decoration: none; /* Quitamos el subrayado feo */
+  color: var(--color-primario);
+}
+
+img {
+  max-width: 100%; /* Las imágenes NUNCA se desbordarán de su contenedor */
+  display: block;
+}
+
+/* ------------------------- */
+/* 2. CLASES REUTILIZABLES   */
+/* ------------------------- */
+
+/*
+  El "Contenedor" es la clase más importante del layout.
+  - Centra el contenido (margin: 0 auto).
+  - Le da un ancho máximo (ej: 1100px) en computadores.
+  - Le da 'padding' en los lados (20px) para que en el 
+    móvil el texto no choque con los bordes.
+*/
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ------------------------- */
+/* 3. ESTILOS DEL HEADER     */
+/* ------------------------- */
+
+
+
+.header-container {
+  /* ¡Flexbox al rescate! */
+  display: flex;
+  justify-content: space-between; /* Logo a la izq, menú a la der */
+  align-items: center; /* Centrados verticalmente */
+}
+
+
+
+/* ------------------------- */
+/* 4. ESTILOS DE NAVEGACIÓN  */
+/* (DISEÑO MOBILE-FIRST)     */
+/* ------------------------- */
+
+/* --- El Botón de Hamburguesa --- */
+.nav-toggle {
+  display: block; /* Visible en móvil por defecto */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem; /* Área de toque */
+}
+
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-secundario); /* Gris oscuro */
+  margin: 5px 0;
+  /* AÑADE ESTO: */
+  transition: transform 0.3s ease, background-color 0.4s ease;
+}
+
+/* --- La Lista del Menú (Oculta por defecto) --- */
+.nav-list {
+  /* OCULTO EN MÓVIL POR DEFECTO */
+  display: none;
+  
+  list-style: none; /* Quitamos los puntos de la lista */
+  
+  /* Cuando JS añada la clase '.nav-list--visible', 
+    estas reglas se activarán 
+  */
+}
+
+.nav-list--visible {
+  display: flex; /* ¡Se hace visible! */
+  flex-direction: column; /* Se apila verticalmente */
+  
+  /* Lo sacamos del flujo normal para que sea un dropdown */
+  position: absolute;
+  top: 100%; /* Justo debajo del header */
+  left: 0;
+  width: 100%; /* Ocupa todo el ancho */
+  background-color: var(--color-fondo);
+  padding: 1rem 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05); /* Sombra para separarlo */
+}
+
+.nav-item {
+  text-align: center; /* Centramos el texto en móvil */
+  margin: 0.5rem 0;
+}
+
+.nav-link {
+  color: var(--color-texto);
+  font-weight: 600; /* Semi-negrita */
+  padding: 0.5rem 1rem;
+  display: block; /* Ocupa todo el ancho del <li> */
+  transition: color 0.4s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-primario);
+}
+
+/* Estilo especial para el botón "Contáctanos" en el menú */
+.btn-nav {
+  background-color: var(--color-primario);
+  color: var(--color-fondo); /* Texto blanco */
+  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  margin: 0.5rem 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-nav:hover {
+  background-color: #0d2a8a; /* Azul más oscuro */
+  color: var(--color-fondo); /* Mantenemos texto blanco */
+}
+
+
+/* ------------------------- */
+/* 5. MEDIA QUERY (TABLET/DESKTOP) */
+/* ------------------------- */
+
+/*
+  "A partir de 768px de ancho..."
+  Aquí revertimos los estilos de móvil y creamos el look de escritorio.
+*/
+@media (min-width: 768px) {
+  
+  .nav-toggle {
+    display: none; /* 1. Ocultamos la hamburguesa */
+  }
+
+  .nav-list {
+    display: flex !important; /* 2. Mostramos la lista SIEMPRE (importante) */
+    flex-direction: row; /* 3. La hacemos horizontal */
+    position: static; /* 4. Revertimos el posicionamiento */
+    width: auto;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    align-items: center; /* Alineamos links con el logo */
+  }
+  
+  .nav-list--visible {
+    /* Reseteamos por si acaso */
+    display: flex;
+    position: static;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin: 0 0.5rem; /* Espacio horizontal entre links */
+  }
+
+  .nav-link {
+    padding: 0.2rem 0.5rem;
+  }
+  
+  .btn-nav {
+    margin: 0 0 0 0.5rem; /* Lo pegamos al resto de links */
+    padding: 0.5rem 1rem; /* Un poco más pequeño en desktop */
+  }
+}
+/* ------------------------- */
+/* 6. ESTILOS DE LA SECCIÓN HERO */
+/* ------------------------- */
+
+.hero-section {
+  /* Usamos un gradiente moderno con los colores de la empresa.
+    Da una sensación más tecnológica que un color plano.
+    (El gradiente va hacia la derecha, del azul a un negro azulado)
+  */
+ 
+  
+  /* El texto debe ser blanco para contrastar con el fondo oscuro */
+  color: var(--color-fondo); /* Variable --color-fondo (blanco) */
+  
+  /* Esto es clave: 'padding' grande para darle "aire" y 
+    que se sienta importante. (4rem arriba/abajo, 0 izq/der)
+  */
+  padding: 4rem 0;
+  text-align: center; /* Centramos todo el contenido */
+  
+  /* Ubicamos el .container *dentro* de la sección
+    para centrar el contenido.
+  */
+}
+
+.hero-section h1 {
+  color: var(--color-fondo); /* Sobreescribimos el color de h1 (que era oscuro) */
+  font-size: 2rem; /* 32px en móvil (Mobile-First) */
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 2rem;
+  
+  /* Limitamos el ancho del párrafo en pantallas grandes
+    para que sea más fácil de leer.
+  */
+  max-width: 600px;
+  margin-left: auto; /* Truco para centrar un elemento con max-width */
+  margin-right: auto;
+  
+  /* Le damos una opacidad ligera para que el H1 resalte más */
+  opacity: 0.9;
+}
+
+/* Creamos una clase de botón REUTILIZABLE.
+  La usaremos aquí y en toda la web.
+*/
+.btn-primary {
+  display: inline-block; /* Para que respete el padding */
+  background-color: var(--color-fondo); /* Fondo blanco */
+  color: var(--color-primario); /* Texto azul */
+  padding: 0.75rem 2rem; /* 12px arriba/abajo, 32px lados */
+  border-radius: 5px;
+  font-weight: 700; /* Negrita */
+  font-size: 1rem; /* 16px */
+  text-transform: uppercase; /* MAYÚSCULAS */
+  letter-spacing: 0.5px; /* Espaciado leve */
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-fondo-claro); /* Un gris muy claro */
+  color: #0d2a8a; /* Azul más oscuro */
+  transform: translateY(-2px); /* Efecto sutil de "elevación" */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------------- */
+/* 7. MEDIA QUERY (DESKTOP)  */
+/* ------------------------- */
+
+/*
+  Ajustes para que se vea MÁS grande en desktop
+*/
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 6rem 0; /* Más padding en pantallas grandes */
+  }
+
+  .hero-section h1 {
+    font-size: 3rem; /* 48px */
+  }
+
+  .hero-section p {
+    font-size: 1.25rem; /* 20px */
+  }
+}
+/* ------------------------- */
+/* 8. ESTILOS SECCIÓN SERVICIOS */
+/* ------------------------- */
+
+.services-section {
+  /* Le damos un fondo gris claro para alternar
+     colores con el Hero (blanco, gris, blanco, gris...)
+     Esto le da ritmo visual a la página.
+  */
+  background-color: var(--color-fondo-claro); /* #f4f4f4 */
+  padding: 4rem 0; /* Buen espaciado */
+}
+
+/* Una clase reutilizable para los títulos de las secciones 
+*/
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem; /* Espacio antes de que empiece el grid */
+}
+
+.section-title h2 {
+  font-size: 2.25rem; /* 36px */
+  color: var(--color-primario);
+}
+
+.section-title p {
+  font-size: 1.125rem; /* 18px */
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) ---
+  Por defecto (en móvil), el grid es solo un contenedor.
+  Las tarjetas (.service-card) se apilarán una sobre otra.
+*/
+/* 1. MÓVIL: Una sola columna (Mobile-First) */
+/* 1. MÓVIL: Una sola columna (Mobile-First) */
+
+
+/* --- El Diseño de las Tarjetas --- */
+.service-card {
+  background-color: var(--color-fondo); /* Fondo blanco */
+  padding: 2rem; /* Espacio interno */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* Sombra sutil */
+  text-align: center; /* Centramos el texto de la tarjeta */
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  /* Efecto al pasar el mouse: se "eleva" */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-card h3 {
+  font-size: 1.25rem; /* 20px */
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  font-size: 1rem; /* 16px */
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.card-link {
+  font-weight: 700;
+  color: var(--color-primario);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+  color: #0d2a8a; /* Azul más oscuro */
+}
+
+/* ------------------------- */
+/* 10. ESTILOS SECCIÓN PROYECTOS */
+/* ------------------------- */
+
+.projects-section {
+  /* Volvemos al fondo blanco para alternar */
+  background-color: var(--color-fondo);
+  padding: 4rem 0;
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) --- */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 columna en móvil */
+  gap: 2rem; /* 32px de espacio */
+}
+
+.project-card {
+  background-color: var(--color-fondo); /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  
+  /* Sombra sutil. Fíjate que es más suave que
+     la de los servicios, porque la imagen ya da separación.
+  */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  
+  /* Esto es CLAVE: le dice al navegador que cualquier
+     cosa que se "salga" de la tarjeta (como la
+     imagen con sus esquinas) debe cortarse
+     para respetar el 'border-radius'.
+  */
+  overflow: hidden;
+  
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  /* Hacemos la sombra un poco más grande al pasar el mouse */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.project-card img {
+  /* La imagen siempre ocupará el 100% del ancho
+    de la tarjeta. 'height: auto' mantiene la proporción.
+  */
+  width: 100%;
+  height: auto;
+  display: block; /* Quita espacios fantasma debajo de la img */
+}
+
+/* Contenedor para el texto debajo de la imagen */
+.project-info {
+  padding: 1.5rem; /* 24px de espacio interno */
+}
+
+.project-info h3 {
+  font-size: 1.25rem; /* 20px */
+  color: var(--color-primario);
+  margin-bottom: 0.5rem;
+}
+
+.project-info p {
+  font-size: 0.9rem; /* 14.4px */
+  color: var(--color-secundario);
+}
+
+
+/* ------------------------- */
+/* 11. MEDIA QUERY (TABLET/DESKTOP) */
+/* ------------------------- */
+
+/* "A partir de 768px de ancho..."
+   Aquí cambiamos la cuadrícula de 1 a 2 columnas
+*/
+@media (min-width: 768px) {
+  .project-grid {
+    /* Cambiamos a 2 columnas.
+      'repeat(2, 1fr)' es lo mismo que '1fr 1fr'.
+      Esto crea la cuadrícula de 2x2.
+    */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* ------------------------- */
+/* 12. ESTILOS DEL FOOTER    */
+/* ------------------------- */
+
+.main-footer {
+  /* Usamos un color oscuro (no negro puro) */
+  background-color: var(--color-secundario); /* #2b2b2b */
+  color: var(--color-fondo-claro); /* Texto gris claro */
+  padding: 4rem 0;
+  margin-top: 4rem; /* Un espacio antes de que empiece */
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) ---
+  Por defecto (en móvil), las columnas se apilan
+  una sobre otra.
+*/
+.footer-container {
+  display: flex;
+  flex-direction: column; /* Apilado vertical */
+  gap: 2rem; /* Espacio entre las "columnas" apiladas */
+}
+
+.footer-col {
+  /* En móvil, cada columna ocupa todo el ancho */
+  width: 100%;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-fondo); /* Blanco */
+  margin-bottom: 0.5rem;
+}
+
+.footer-col h4 {
+  font-size: 1.125rem; /* 18px */
+  color: var(--color-fondo); /* Blanco */
+  margin-bottom: 1rem;
+}
+
+.footer-col p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footer-list {
+  list-style: none; /* Quitamos los puntos */
+}
+
+.footer-list li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-list a {
+  color: var(--color-fondo-claro); /* Gris claro */
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-list a:hover {
+  color: var(--color-primario); /* Azul al pasar el mouse */
+  text-decoration: underline;
+}
+
+/* ------------------------- */
+/* 13. MEDIA QUERY (TABLET/DESKTOP) */
+/* ------------------------- */
+
+/* "A partir de 768px de ancho..."
+   Aquí creamos las columnas horizontales.
+*/
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row; /* 1. Cambiamos a horizontal */
+    justify-content: space-between; /* 2. Espaciamos las columnas */
+  }
+  
+  /* Le damos a cada columna un tercio del espacio,
+    restando el 'gap' para que quepan bien.
+    'calc(33.33% - 1.5rem)' es un buen truco.
+  */
+  .footer-col {
+    width: calc(33.33% - 1.5rem);
+  }
+}
+/* ------------------------- */
+/* 14. ESTILOS PÁGINA CONTACTO */
+/* ------------------------- */
+
+.contact-section {
+  padding: 4rem 0;
+  background-color: var(--color-fondo-claro); /* Fondo gris claro */
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) --- */
+.contact-container {
+  display: flex;
+  flex-direction: column; /* Apilado vertical en móvil */
+  gap: 3rem; /* Espacio entre el form y la info */
+  
+  background-color: var(--color-fondo); /* Fondo blanco */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+/* --- Estilos del Formulario --- */
+.contact-form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block; /* El label ocupa su propia línea */
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--color-secundario);
+}
+
+/* Estilo global para inputs y textarea.
+  Los hace 100% anchos, limpios y modernos.
+*/
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: inherit; /* Usa la misma fuente del body */
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto "focus" sutil cuando haces clic */
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 5px rgba(17, 54, 179, 0.3); /* Sombra azul */
+}
+
+/* Clase de utilidad para el botón */
+.btn-full-width {
+  width: 100%;
+  padding: 1rem; /* Botón más grande */
+}
+
+/* --- Estilos de la Info Directa --- */
+.contact-info {
+  width: 100%;
+}
+
+.contact-info h3 {
+  font-size: 1.5rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+
+.contact-info p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.info-list {
+  list-style: none;
+}
+
+.info-list li {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.info-list li strong {
+  color: var(--color-secundario);
+}
+
+
+/* ------------------------- */
+/* 15. MEDIA QUERY (DESKTOP)   */
+/* ------------------------- */
+
+/* "A partir de 992px de ancho..."
+   Usamos un breakpoint un poco más grande
+   para que las 2 columnas se vean bien.
+*/
+@media (min-width: 992px) {
+  .contact-container {
+    flex-direction: row; /* 1. Cambiamos a horizontal */
+    padding: 3rem;
+  }
+  
+  /* Hacemos que el formulario ocupe el 60%
+    y la info el 40% del espacio.
+  */
+  .contact-form {
+    width: 60%;
+    padding-right: 2rem; /* Espacio para que no se peguen */
+  }
+  
+  .contact-info {
+    width: 40%;
+    border-left: 1px solid #eee; /* Línea divisoria sutil */
+    padding-left: 2rem;
+  }
+}
+/* ------------------------- */
+/* 16. ESTILOS PÁGINA SERVICIOS */
+/* ------------------------- */
+
+/* El "Hero" de título de la página */
+.page-hero {
+  /* Reutilizamos el gradiente del Hero de la portada */
+  background: linear-gradient(90deg, 
+                              var(--color-primario) 0%, 
+                              #0a1f5e 100%);
+  color: var(--color-fondo);
+  padding: 3rem 0; /* Más pequeño que el hero principal */
+  text-align: center;
+}
+
+.page-hero h1 {
+  color: var(--color-fondo);
+  font-size: 2.5rem;
+}
+
+.page-hero p {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+}
+
+/* --- Estilo de cada sección de detalle --- */
+.service-detail {
+  padding: 4rem 0;
+  /* El "scroll-margin-top" es un truco genial.
+    Cuando haces clic en "servicios.html#infra",
+    el navegador salta al ID. Esto agrega un margen
+    para que el título no quede pegado al header fijo.
+  */
+  scroll-margin-top: 80px; /* Ajusta este valor (altura de tu header) */
+}
+
+/* Fondo alterno para la sección 2 */
+.service-detail-alt {
+  background-color: var(--color-fondo-claro); /* #f4f4f4 */
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) --- */
+.service-detail-content {
+  display: flex;
+  flex-direction: column; /* Apilado en móvil */
+  gap: 2rem; /* Espacio entre imagen y texto */
+}
+
+.service-detail-text {
+  width: 100%;
+}
+
+.service-detail-image {
+  width: 100%;
+}
+
+.service-detail-image img {
+  border-radius: 8px; /* Bordes redondeados para las fotos */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Asegura que sea responsive */
+}
+
+.service-detail-text h2 {
+  font-size: 2rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+
+.service-detail-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilos de la lista de "features" */
+.service-detail-text ul {
+  list-style: none; /* Quitamos los puntos por defecto */
+  padding-left: 0;
+}
+
+.service-detail-text ul li {
+  position: relative;
+  padding-left: 1.75rem; /* Espacio para el ícono */
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Creamos un "check" con CSS puro.
+  Es más profesional que los puntos.
+*/
+.service-detail-text ul li::before {
+  content: '✓'; /* Puedes usar '✔' o un ícono de FontAwesome */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-primario); /* Azul */
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* ------------------------- */
+/* 17. MEDIA QUERY (DESKTOP)   */
+/* ------------------------- */
+
+/* "A partir de 768px de ancho..." */
+@media (min-width: 768px) {
+  .service-detail-content {
+    flex-direction: row; /* 1. Cambiamos a horizontal */
+    align-items: center; /* 2. Centramos verticalmente */
+  }
+
+  .service-detail-text,
+  .service-detail-image {
+    /* 3. Cada uno toma la mitad del espacio */
+    width: 50%;
+  }
+  
+  /* ¡La magia de alternar!
+    Le decimos a la sección ".service-detail-alt"
+    que invierta el orden de sus hijos (flex-direction).
+  */
+  .service-detail-alt .service-detail-content {
+    flex-direction: row-reverse;
+  }
+}
+/* ------------------------- */
+/* 18. ESTILOS PÁGINA PROYECTOS */
+/* ------------------------- */
+
+.projects-gallery {
+  padding: 4rem 0;
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) ---
+  Por defecto, será una sola columna.
+*/
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 columna en móvil */
+  gap: 2rem; /* 32px de espacio */
+}
+
+/* ------------------------- */
+/* 19. MEDIA QUERY (TABLET/DESKTOP) */
+/* ------------------------- */
+
+/* "A partir de 600px de ancho..."
+   Aquí es donde ocurre la magia.
+*/
+@media (min-width: 600px) {
+  .gallery-grid {
+    /*
+      ¡Este es el CSS Grid moderno! Significa:
+      "Crea columnas (auto-fit) que tengan un
+      tamaño MÍNIMO (minmax) de 300px, pero que
+      puedan crecer hasta 1 fracción (1fr)
+      para rellenar el espacio equitativamente."
+      
+      Resultado: El navegador pondrá tantas columnas de 300px
+      como quepan, y luego las estirará para que ocupen
+      todo el ancho.
+    */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+/* ------------------------- */
+/* 20. ESTILOS PÁGINA NOSOTROS */
+/* ------------------------- */
+
+.about-section {
+  padding: 4rem 0;
+  background-color: var(--color-fondo-claro); /* Fondo gris claro */
+}
+
+/* --- DISEÑO MOBILE-FIRST (Apilado) --- */
+.about-content {
+  display: flex;
+  flex-direction: column; /* Apilado en móvil */
+  gap: 2rem; /* Espacio entre imagen y texto */
+  
+  background-color: var(--color-fondo); /* Fondo blanco */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+.about-image {
+  width: 100%;
+}
+
+.about-image img {
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.about-text {
+  width: 100%;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+}
+
+.about-text h3 {
+  font-size: 1.5rem;
+  color: var(--color-secundario);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+
+/* ------------------------- */
+/* 21. MEDIA QUERY (DESKTOP)   */
+/* ------------------------- */
+
+/* "A partir de 992px de ancho..." */
+@media (min-width: 992px) {
+  .about-content {
+    flex-direction: row; /* Horizontal */
+    align-items: center; /* Alineados verticalmente */
+    padding: 3rem;
+  }
+  
+  /* Hacemos que la imagen tome 40% y el texto 60% */
+  .about-image {
+    width: 40%;
+  }
+  
+  .about-text {
+    width: 60%;
+    padding-left: 3rem; /* Espacio para que no se peguen */
+  }
+}
+/* ------------------------- */
+/* 22. AJUSTES DEL BOCETO    */
+/* ------------------------- */
+
+/* Estilo para el nuevo subtítulo del Hero */
+.hero-subtitulo {
+  font-size: 1.25rem; /* 20px (o el tamaño que te guste) */
+  font-weight: 300;   /* Un poco más delgado, menos importante que el H1 */
+  opacity: 0.9;       /* Un poco más tenue */
+  margin-bottom: 1.5rem;
+}
+
+/* Ajustamos el párrafo principal del Hero 
+  (el que ya teníamos estilizado)
+*/
+.hero-section p {
+  /* Hacemos que la caja de texto sea un poco más ancha
+     para el nuevo párrafo, como en el boceto.
+  */
+  max-width: 850px;
+}
+/* ------------------------- */
+/* 23. ANIMACIÓN HEADER SCROLL */
+/* ------------------------- */
+
+/* Hacemos que la transición del header (color, padding)
+   sea suave y no un salto brusco.
+*/
+.main-header {
+  transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Esta es la clase que añade el JavaScript.
+  Define el "nuevo look" del header al hacer scroll.
+*/
+
+/* AÑADE ESTAS NUEVAS REGLAS: 
+*/
+
+/* 1. Cambia el color del logo a blanco */
+
+
+/* 2. Cambia los links a blanco claro (para que no compitan con el logo)
+   Usamos :not(.btn-nav) para NO afectar a tu botón "Contáctanos".
+*/
+.header-scrolled .nav-link:not(.btn-nav) {
+  color: var(--color-fondo-claro); /* --color-fondo-claro es #f4f4f4 */
+}
+
+/* 3. (Opcional) Hacemos que el hover sea blanco puro */
+.header-scrolled .nav-link:not(.btn-nav):hover {
+  color: var(--color-fondo);
+}
+/* ------------------------- */
+/* 24. ANIMACIÓN FADE-IN SCROLL */
+/* ------------------------- */
+
+/*
+  1. El estado INICIAL (oculto)
+  Los elementos empiezan invisibles,
+  ligeramente movidos hacia abajo.
+*/
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(20px); /* Puedes ajustar 20px a 30px o más */
+  
+  /* La transición suave (puedes ajustar el 0.6s) */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/*
+  2. El estado FINAL (visible)
+  Esta es la clase que añade el JavaScript.
+  Los hace 100% opacos y los vuelve a su posición original.
+*/
+.fade-in-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------- */
+/* 25. ESTILO HEADER Y LOGO (Definitivo) */
+/* ------------------------- */
+
+/* 1. Definimos una altura FIJA para el header */
+.main-header {
+  background-color: var(--color-fondo); /* Fondo blanco inicial */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra inicial */
+  
+  /* ¡LA CLAVE! Una altura fija. 
+     Juega con 80px o 90px si 80 es muy poco.
+  */
+  height: 80px; 
+  
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  
+  /* ¡IMPORTANTE! Solo animamos el color, NUNCA la altura o el padding */
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 2. Hacemos que el <a> del logo ocupe el espacio */
+.logo {
+  height: 100%; /* Ocupa los 80px del header */
+  display: flex;
+  align-items: center; /* Centra la imagen verticalmente */
+  text-decoration: none;
+}
+
+/* 3. Controlamos la imagen DENTRO del <a> */
+.logo img {
+  /* La imagen NUNCA será más alta que esto */
+  max-height: 100px; /* Ej: 50px (para que tenga aire) */
+  width: auto; /* Mantiene la proporción */
+  object-fit: contain; /* Impide que se deforme */
+  
+  /* Animamos su tamaño para el scroll */
+  transition: max-height 0.4s ease;
+}
+
+/* ------------------------- */
+/* 26. ESTADO SCROLLED (Definitivo) */
+/* ------------------------- */
+
+/* El JS añade esta clase (con el script 50/40 que ya tienes) */
+.header-scrolled {
+  background-color: var(--color-secundario); /* Fondo oscuro */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* ⛔️ ¡No cambiamos el height NI el padding! */
+}
+
+/* Achicamos la imagen en el scroll */
+.header-scrolled .logo img {
+   max-height: 90px; /* Un poco más pequeña que los 50px originales */
+}
+
+/* (Estas reglas ya las tienes, pero asegúrate) */
+/* Cambia el color de los links a blanco */
+.header-scrolled .nav-link:not(.btn-nav) {
+  color: var(--color-fondo-claro); 
+}
+.header-scrolled .nav-link:not(.btn-nav):hover {
+  color: #7fceff; /* Un azul claro y brillante */
+}
+.header-scrolled .hamburger-line {
+  /* Usamos el mismo color de los links (blanco claro) */
+  background-color: var(--color-fondo-claro); 
+}
+/* ------------------------- */
+/* 27. ARREGLO GRID "NOSOTROS" */
+/* ------------------------- */
+
+/*
+  Esta nueva clase SÍ la podemos controlar
+  para que tenga 3 columnas en desktop,
+  sin afectar a la página de inicio.
+*/
+
+/* 1. MÓVIL: Una sola columna */
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+/* 2. TABLET: Sigue en 1 columna (o 2 si prefieres) */
+@media (min-width: 600px) {
+  .values-grid {
+    grid-template-columns: 1fr; /* Mantenemos 1 col */
+  }
+}
+
+/* 3. DESKTOP: Tres columnas */
+@media (min-width: 992px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* ------------------------- */
+/* 28. ESTILOS SECCIÓN CTA   */
+/* ------------------------- */
+
+.cta-section {
+  /* Usamos el color oscuro del footer para que resalte */
+
+  color: var(--color-fondo); /* Texto blanco */
+  padding: 4rem 0;
+  text-align: center;
+  
+  /* Un pequeño margen para separarlo del footer */
+  margin-top: 4rem; 
+}
+
+.cta-section h2 {
+  color: var(--color-fondo); /* Título blanco */
+  font-size: 2.25rem; /* 36px */
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  font-size: 1.125rem; /* 18px */
+  color: var(--color-fondo-claro); /* Texto gris claro */
+  max-width: 600px;
+  margin: 0 auto 2rem auto; /* Centrado */
+}
+
+/* ¡No necesitamos estilizar el botón!
+  Como usamos .btn-primary, ya toma el estilo
+  de "botón blanco con texto azul" que definimos.
+  ¡CSS reutilizable en acción!
+*/
+
+/* ------------------------- */
+/* 29. BOTÓN VOLVER ARRIBA (Corregido) */
+/* ------------------------- */
+.back-to-top {
+  position: fixed;
+  
+  /* ¡AQUÍ EL ARREGLO 1!
+    Lo subimos 80px para que quede *encima*
+    del botón de WhatsApp (que está a 20px).
+    (Puedes ajustar 80px a 75px o 85px si lo prefieres)
+  */
+  bottom: 80px; 
+  right: 20px;
+  
+  background-color: var(--color-primario);
+  color: var(--color-fondo);
+  
+  /* ¡AQUÍ EL ARREGLO 2!
+    Forzamos un círculo perfecto con 
+    ancho y alto iguales.
+  */
+  width: 45px;
+  height: 45px;
+  padding: 0; /* Quitamos el padding viejo */
+  border-radius: 50%;
+  
+  /* Centramos la flecha (↑)
+    dentro del círculo.
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1; /* Ayuda a centrar la flecha */
+  
+  /* Oculto por defecto */
+  opacity: 0;
+  visibility: hidden;
+  
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  z-index: 100;
+}
+
+/* La clase .is-visible no cambia, está perfecta */
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* (Opcional) Un pequeño efecto hover que
+  se me olvidó la primera vez
+*/
+.back-to-top:hover {
+  background-color: #0d2a8a; /* Azul más oscuro */
+}
+/* ------------------------- */
+/* 30. ANIMACIÓN GRADIENTE VIVO (Mejorada) */
+/* ------------------------- */
+
+/* 1. Definimos el NUEVO gradiente y la animación */
+.hero-section,
+.cta-section {
+  /* ¡NUEVO GRADIENTE!
+    Añadimos un azul más brillante (#2a52c5) en medio
+    para que la "ola" sea mucho más notoria.
+    (Repetimos el color primario al final para un bucle suave)
+  */
+  background: linear-gradient(
+    90deg, 
+    var(--color-primario), /* Color A */
+    #2a52c5,             /* Color B (Brillante) */
+    #0a1f5e,             /* Color C (Oscuro) */
+    var(--color-primario) /* Color A (de nuevo) */
+  );
+  
+  /* Hacemos el fondo 4 veces más grande */
+  background-size: 400% 400%;
+  
+  /* ¡MÁS RÁPIDO!
+    Cambiamos de 15s a 10s (puedes bajarlo a 8s si quieres)
+  */
+  animation: gradientWave 10s ease infinite;
+}
+
+/* 2. La animación (keyframe) no cambia */
+@keyframes gradientWave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* ✅ PEGA ESTO (Es el código nuevo de 4 columnas) ✅
+*/
+/* ---------------------------------- */
+/* REGLA CORREGIDA PARA 8 TARJETAS (4 columnas) */
+/* ---------------------------------- */
+
+/* 1. MÓVIL: Una sola columna */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem; /* Reducimos el 'gap' para que quepan mejor */
+}
+
+/* 2. TABLET: Dos columnas */
+@media (min-width: 600px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3. DESKTOP: Cuatro columnas */
+@media (min-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------------------------------- */
+/* 31. REJILLA SIMÉTRICA DE SERVICIOS */
+/* ---------------------------------- */
+
+/* 1. MÓVIL: Una sola columna (por defecto) */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 0 1rem; 
+}
+
+/* 2. TABLET: Dos columnas simétricas */
+@media (min-width: 600px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3. DESKTOP: Cuatro columnas simétricas */
+@media (min-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* 4. TARJETA DE SERVICIO (Contenedor) */
+.service-card {
+  position: relative; /* Clave para el hover */
+  overflow: hidden; /* Clave para la animación */
+  
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  min-height: 180px; 
+  
+  /* Centra el título H3 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  transition: all 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 5. TÍTULO DE LA TARJETA (H3) */
+.service-card h3 {
+  /* Preparamos el título para la transición */
+  transition: all 0.4s ease-out;
+  /* Nos aseguramos de que esté por encima del panel */
+  position: relative;
+  z-index: 10;
+}
+
+
+/* ---------------------------------------------- */
+/* 32. LÓGICA DE HOVER (BOTÓN ELEGANTE) - CORREGIDO */
+/* ---------------------------------------------- */
+
+/* 1. EL PANEL DE HOVER (Oculto por defecto) */
+.service-card-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* --- ARREGLO 2: Degradado azul más claro --- */
+  /* Este degradado va de un azul brillante 
+     al azul principal de tu marca.
+  */
+  background: linear-gradient(135deg, 
+                              #2a6aff, /* Un azul nuevo, más brillante */
+                              var(--color-primario)); /* Tu azul (#1136b3) */
+  
+  /* Centra el botón "Saber más" */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Estado inicial: Oculto */
+  opacity: 0;
+  visibility: hidden;
+  z-index: 5; /* Detrás del título (H3) */
+  
+  /* Animación de "subida" */
+  transform: translateY(20px);
+  transition: all 0.4s ease-out;
+}
+
+/* 2. ESTADO HOVER: Mostrar el panel */
+.service-card:hover .service-card-details {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Vuelve a su sitio */
+  
+  /* --- ARREGLO 1 (CLIC): Traemos el panel al FRENTE --- */
+  z-index: 15; 
+}
+
+/* 3. ESTADO HOVER: Ocultar el título */
+.service-card:hover h3 {
+  opacity: 0;
+  transform: translateY(-20px); /* El título "sube" y desaparece */
+  
+  /* --- ARREGLO 1 (CLIC): Enviamos el título al FONDO --- */
+  z-index: 1;
+}
+
+
+/* 4. ESTILO DEL BOTÓN "SABER MÁS" ELEGANTE */
+.service-card-details .card-link {
+  color: var(--color-primario); /* Texto azul */
+  background-color: var(--color-fondo); /* Fondo blanco */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  
+  /* Forma de "píldora" */
+  padding: 0.75rem 1.5rem; /* 12px arriba/abajo, 24px lados */
+  border-radius: 50px; /* Bordes totalmente redondeados */
+  
+  /* Sombra sutil para el botón */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  /* Animación para su propio hover */
+  transition: all 0.3s ease;
+}
+
+/* 5. HOVER DEL PROPIO BOTÓN */
+.service-card-details .card-link:hover {
+  /* Fondo gris claro (de tus variables) */
+  background-color: var(--color-fondo-claro); 
+  
+  /* Efecto "pop" */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+/* ---------------------------------- */
+/* 33. AJUSTE SECCIÓN ÁRBOL NATIVO    */
+/* ---------------------------------- */
+
+/* Usamos la clase que ya tenías en el HTML 
+  para sobreescribir los estilos de .services-section
+*/
+.native-tree-section {
+  
+  /* 1. Arreglo de color: Cambiamos de gris a blanco */
+  background-color: var(--color-fondo); /* #ffffff */
+  
+  /* 2. Arreglo de grosor: Lo hacemos más delgado */
+  /* (El original de .services-section era 4rem) */
+  padding: 1.5rem 0;
+}
+.native-tree-section .service-detail-content {
+  
+  /* Le damos un ancho máximo más pequeño (ej. 900px) 
+    que el contenedor principal (1100px)
+  */
+  max-width: 900px;
+  
+  /* Centramos este nuevo bloque más delgado */
+  margin-left: auto;
+  margin-right: auto;
+}
+/* ---------------------------------- */
+/* 34. ESTILOS FOOTER SOCIAL MEDIA    */
+/* ---------------------------------- */
+
+.footer-social-links {
+  /* 1. Usamos Flexbox para alinear los logos */
+  display: flex;
+  gap: 1rem; /* 16px de espacio entre logos */
+  
+  /* 2. Espacio para separarlo del copyright */
+  margin-top: 1.25rem; /* 20px */
+}
+
+.footer-social-links a {
+  display: inline-block;
+  /* Animación suave */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-social-links a:hover {
+  opacity: 0.75; /* Sutil transparencia */
+  transform: scale(1.1); /* Pequeño "pop" */
+}
+
+.footer-social-links img {
+  /* 3. Tamaño de los logos */
+  width: 30px;
+  height: 30px;
+}
+/* ---------------------------------- */
+/* 35. ARREGLO MENÚ MÓVIL SCROLLED    */
+/* ---------------------------------- */
+
+/*
+  ARREGLO:
+  Cuando el header está oscuro (.header-scrolled)
+  PERO el menú móvil (con fondo blanco) está abierto (.nav-list--visible),
+  forzamos a que los links vuelvan a ser oscuros.
+*/
+.header-scrolled .nav-list--visible .nav-link:not(.btn-nav) {
+  color: var(--color-texto); /* Vuelve al color oscuro */
+}
+
+/* (Opcional) Nos aseguramos de que el hover 
+  también sea el color correcto (azul primario).
+*/
+.header-scrolled .nav-list--visible .nav-link:not(.btn-nav):hover {
+  color: var(--color-primario);
+}
+/* ---------------------------------- */
+/* 36. ESTILOS MENSAJES DE FORMULARIO */
+/* ---------------------------------- */
+
+#form-status-message {
+  margin-top: 1.5rem; /* 24px */
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+  
+  /* Oculto por defecto */
+  display: none; 
+}
+
+/* Estilo para mensaje de ÉXITO */
+#form-status-message.success {
+  display: block; /* Se hace visible */
+  background-color: #e0f8e0;
+  color: #2a7d2a;
+  border: 1px solid #a0dca0;
+}
+
+/* Estilo para mensaje de ERROR */
+#form-status-message.error {
+  display: block; /* Se hace visible */
+  background-color: #f8e0e0;
+  color: #b02a2a;
+  border: 1px solid #dca0a0;
+}
+
+/*----------------------------------------------------------------------------------------------------------*/
+
+.service-feature-list {
+    margin-top: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.service-feature-list li {
+    margin-bottom: 10px;
+    padding-left: 18px;
+    position: relative;
+}
+
+.service-feature-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #21AFEB;
+    font-weight: bold;
+}
+
+/*------------------------------------------------------------------------------------------------------------
+.descarga-pdf {
+  margin-top: 30px;
+}
+
+.btn-pdf {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #0d1b2a;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.btn-pdf:hover {
+  background-color: #1b263b;
+}
+/*------------------------------------------------------------------------------------------------------------*/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh; /* ocupa 85% del alto de la pantalla */
+  margin: 3% auto;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.modal-content iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
+.cerrar {
+  position: absolute;
+  
+  top: -15px;   /* 👈 la saca hacia arriba */
+  right: -15px; /* 👈 la saca hacia la derecha */
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  color: white;
+  background: #0d1b2a; /* tu estilo corporativo */
+
+  border-radius: 50%;
+  cursor: pointer;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+  transition: all 0.2s ease;
+}
+
+.cerrar:hover {
+  background: #1b263b;
+  transform: scale(1.1);
+}
+
+.btn-pdf {
+  margin-top: 30px;
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #0d1b2a;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s ease;
+
+}
+
+.btn-pdf:hover {
+  background-color: #1b263b;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------
+
+body {
+  user-select: none;
+}
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}*/

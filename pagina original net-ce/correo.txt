@@ -1,0 +1,22 @@
+New form submission on ContactoWeb
+
+Someone just submitted a form on net-ce.cl/. Here's what they had to say:
+
+name
+
+prueba
+email
+
+dariensu.d@gmail.com
+phone
+
+message
+
+prueba
+Submitted 11:42 PM - 13 April 2026
+
+Mark as spam
+ 
+Formspree logo
+ 
+You are receiving this because you confirmed this email address on Formspree.
