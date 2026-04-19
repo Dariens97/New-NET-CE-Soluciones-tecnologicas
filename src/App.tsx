@@ -33,6 +33,11 @@ import {
   Zap
 } from 'lucide-react';
 
+// --- Assets ---
+import logoImg from './assets/images/Logo-NETCE-png.png';
+import arbolImg from './assets/images/arbol202.png';
+import nosotrosImg from './assets/images/photo-1521791136064-7986c2920216.jpg';
+
 // --- Components ---
 
 const Navbar = () => {
@@ -59,7 +64,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <a href="#inicio" className="flex items-center gap-2">
           <img 
-            src="/images/Logo-NETCE-png.png" 
+            src={logoImg} 
             alt="NET-CE Logo" 
             className="h-12 md:h-16 w-auto transition-all duration-300"
           />
@@ -472,7 +477,7 @@ const TreeSection = () => {
         >
           <div className="rounded-3xl overflow-hidden border border-accent-500/20 shadow-2xl shadow-accent-500/5">
             <img 
-              src="/images/arbol202.png" 
+              src={arbolImg} 
               alt="Bosque Nativo" 
               className="w-full h-auto object-cover"
             />
@@ -573,7 +578,7 @@ const About = () => {
           <div className="relative">
             <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
               <img 
-                src="/images/photo-1521791136064-7986c2920216.jpg" 
+                src={nosotrosImg} 
                 alt="Nosotros" 
                 className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700"
               />
@@ -691,7 +696,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex flex-col items-center md:items-start gap-4">
           <img 
-            src="/images/Logo-NETCE-png.png" 
+            src={logoImg} 
             alt="NET-CE" 
             className="h-10 md:h-12 w-auto opacity-80"
           />
